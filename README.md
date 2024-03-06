@@ -182,7 +182,7 @@ The students are divided into three groups according each student's Student ID.
 Please finish the following code which belongs to your group. You need to add your inline assembly code in the C file, belonging to your group.
 
 * Group 1: sub_inline.c
-```clike
+```C
 #include <stdio.h>
 
 int main ()
@@ -199,7 +199,7 @@ int main ()
 ```
 
 * Group 2: mul_inline.c
-```clike
+```C
 #include <stdio.h>
 
 int main ()
@@ -216,7 +216,7 @@ int main ()
 ```
 
 * Group 3: div_inline.c
-```clike
+```C
 #include <stdio.h>
 
 int main ()
@@ -236,7 +236,7 @@ int main ()
 Please finish the following code which belongs to your group. The original C code is in the comments.
 * Group 1: subarray_inline.c
 
-```clike
+```C
 #include <stdio.h>
 
 int main ()
@@ -268,7 +268,7 @@ int main ()
 ```
 * Group 2: mularray_inline.c
 
-```clike
+```C
 #include <stdio.h>
 
 int main ()
@@ -300,7 +300,7 @@ int main ()
 ```
 * Group 3: divarray_inline.c
 
-```clike
+```C
 #include <stdio.h>
 
 int main ()
@@ -392,7 +392,7 @@ int main()
 Please modify the above c code to inline assembly version. You should copy the following code and write your code in `asm volatile()`. Beware *Your Code* is **in** the for loop.
 
 
-```clike
+```C
 #include<stdio.h>
  
 int main()
@@ -429,7 +429,7 @@ int main()
 Given the matrix multiplication code `matrix.c` in 3-3, please convert the nested for-loop into the inline assembly version. 
 You should copy the following code and write your code in `asm volatile()`. Note that the entire nested for-loop should be converted into the inline assembly code in this exercise.
 
-```clike
+```C
 #include<stdio.h>
  
 int main()
@@ -459,7 +459,7 @@ int main()
 ### 3-5 Calculate $\pi$ (20%)
 Given the calculating $\pi$ code `calcPi.c` below, please finish the following code.(20%)
 In this code `calcPi.c`, we use Leibniz formula to approximate $\pi$.
-```clike
+```C
 /*
  * description: Gregory-Leibniz series
  * 
