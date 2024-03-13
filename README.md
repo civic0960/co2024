@@ -29,7 +29,7 @@ For those students who use Mac or Windows systems, in order to save your time fo
 
 ## 1. RISC-V Development Tools Installation
 
-![Spike.drawio](https://hackmd.io/_uploads/r1jbD0C6a.png)
+![](Spike.drawio.png)
 
 
 The figure above illustrates the execution flow of a C program with Spike, a RISC-V processor simulator, on top of your host machine. 
