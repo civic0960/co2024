@@ -8,6 +8,7 @@
 This assignment is to be familiar with the hardware/software interface: instruction set architecture (ISA), as well as the environment and tools (e.g., compiler and RISC-V simulator) for RISC-V programming. Thus, the first programming assignment is to **write inline assembly code** and run the developed code on a RISC-V ISA Simulator, *Spike*, to evaluate the result. 
 
 ## Prerequisite
+<mark>**If you have completed the environment setup from HW0 without any issues, you can proceed directly to section 2.**</mark></font>
 
 The homework assignments of this course are based on the RISC-V Spike simulator running on Ubuntu Linux 22.04. As our assignments are built upon open source projects, there will be unexpected compatibility issues if you choose a different development environment. 
 
@@ -28,7 +29,8 @@ For those students who use Mac or Windows systems, in order to save your time fo
 
 ## 1. RISC-V Development Tools Installation
 
-![](Spike.drawio.png)
+![Spike.drawio](https://hackmd.io/_uploads/r1jbD0C6a.png)
+
 
 The figure above illustrates the execution flow of a C program with Spike, a RISC-V processor simulator, on top of your host machine. 
 There are three yellow boxes represents three different tools: *riscv-gnu-toolchain*, *riscv-isa-sim*, and *riscv-pk*. 
@@ -122,7 +124,6 @@ $ spike --isa=RV64GC /opt/riscv/riscv64-unknown-linux-gnu/bin/pk hello
 If the above two commands are performed successfully, the terminal will show the following contents.
 
 ```
-bbl loader
 Hello
 ```
 
@@ -138,12 +139,12 @@ The inline assembly code provide a way to write efficient code. One of the benef
 ### Example:
 
 Original C program: `add.c`
-```C
+```c
 #include <stdio.h>
 
 int main ()
 {
-	int a=10, b=5;
+	int a = 10, b = 5;
 	a = a + b;
 	printf("%d\n", a);
 	return 0;
@@ -151,12 +152,12 @@ int main ()
 ```
 
 Inline assembly version: `add_inline.c`
-```C
+```c
 #include <stdio.h>
 
 int main ()
 {
-	int a=10, b=5;	
+	int a = 10, b = 5;	
 	//a = a + b;
 	asm volatile(
 		"add %[a], %[a], %[b]\n\t"	//AssemblerTemplate
@@ -178,17 +179,18 @@ The students are divided into three groups according each student's Student ID.
 * Group 2: StudentID mod 3 = 2.
 * Group 3: StudentID mod 3 = 0.
 
+Please write your code in `asm volatile()`. Any modifications outside of `asm volatile()` are not allowed.
 ### 3-1 Basic (20%)
 Please finish the following code which belongs to your group. You need to add your inline assembly code in the C file, belonging to your group.
 
 * Group 1: sub_inline.c
-```C
+```c
 #include <stdio.h>
 
 int main ()
 {
     int a, b;
-    FILE *input = fopen("../input/1.txt","r");
+    FILE *input = fopen("../input/1.txt", "r");
     fscanf(input, "%d %d", &a, &b);
     fclose(input);
     //a = a - b;
@@ -199,13 +201,13 @@ int main ()
 ```
 
 * Group 2: mul_inline.c
-```C
+```c
 #include <stdio.h>
 
 int main ()
 {
     int a, b;
-    FILE *input = fopen("../input/1.txt","r");
+    FILE *input = fopen("../input/1.txt", "r");
     fscanf(input, "%d %d", &a, &b);
     fclose(input);
     //a = a * b;
@@ -216,13 +218,13 @@ int main ()
 ```
 
 * Group 3: div_inline.c
-```C
+```c
 #include <stdio.h>
 
 int main ()
 {
     int a, b;
-    FILE *input = fopen("../input/1.txt","r");
+    FILE *input = fopen("../input/1.txt", "r");
     fscanf(input, "%d %d", &a, &b);
     fclose(input);
     //a = a / b;
@@ -236,17 +238,17 @@ int main ()
 Please finish the following code which belongs to your group. The original C code is in the comments.
 * Group 1: subarray_inline.c
 
-```C
+```c
 #include <stdio.h>
 
 int main ()
 {
-    int a[10] = {0}, b[10]= {0}, c[10] = {0}; 
+    int a[10] = {0}, b[10] = {0}, c[10] = {0}; 
     int i, arr_size = 10;
-    FILE *input = fopen("../input/2.txt","r");
-    for(i = 0; i<arr_size; i++) fscanf(input,"%d", &a[i]);
-    for(i = 0; i<arr_size; i++) fscanf(input,"%d", &b[i]);
-    for(i = 0; i<arr_size; i++) fscanf(input,"%d", &c[i]);
+    FILE *input = fopen("../input/2.txt", "r");
+    for(i = 0; i < arr_size; i++) fscanf(input, "%d", &a[i]);
+    for(i = 0; i < arr_size; i++) fscanf(input, "%d", &b[i]);
+    for(i = 0; i < arr_size; i++) fscanf(input, "%d", &c[i]);
     fclose(input);
     int *p_a = &a[0];
     int *p_b = &b[0];
@@ -261,24 +263,24 @@ int main ()
         asm volatile(/*Your Code*/);
 	}
     p_c = &c[0];
-    for(i = 0; i<arr_size; i++) printf("%d ", *p_c++);
+    for(i = 0; i < arr_size; i++) printf("%d ", *p_c++);
     printf("\n")
     return 0;
 }
 ```
 * Group 2: mularray_inline.c
 
-```C
+```c
 #include <stdio.h>
 
 int main ()
 {
-    int a[10] = {0}, b[10]= {0}, c[10] = {0}; 
+    int a[10] = {0}, b[10] = {0}, c[10] = {0}; 
     int i, arr_size = 10;
-    FILE *input = fopen("../input/2.txt","r");
-    for(i = 0; i<arr_size; i++) fscanf(input,"%d", &a[i]);
-    for(i = 0; i<arr_size; i++) fscanf(input,"%d", &b[i]);
-    for(i = 0; i<arr_size; i++) fscanf(input,"%d", &c[i]);
+    FILE *input = fopen("../input/2.txt", "r");
+    for(i = 0; i < arr_size; i++) fscanf(input, "%d", &a[i]);
+    for(i = 0; i < arr_size; i++) fscanf(input, "%d", &b[i]);
+    for(i = 0; i < arr_size; i++) fscanf(input, "%d", &c[i]);
     fclose(input);
     int *p_a = &a[0];
     int *p_b = &b[0];
@@ -293,24 +295,24 @@ int main ()
         asm volatile(/*Your Code*/);
 	}
     p_c = &c[0];
-    for(i = 0; i<arr_size; i++) printf("%d ", *p_c++);
+    for(i = 0; i < arr_size; i++) printf("%d ", *p_c++);
     printf("\n")
     return 0;
 }
 ```
 * Group 3: divarray_inline.c
 
-```C
+```c
 #include <stdio.h>
 
 int main ()
 {
-    int a[10] = {0}, b[10]= {0}, c[10] = {0}; 
+    int a[10] = {0}, b[10] = {0}, c[10] = {0}; 
     int i, arr_size = 10;
-    FILE *input = fopen("../input/2.txt","r");
-    for(i = 0; i<arr_size; i++) fscanf(input,"%d", &a[i]);
-    for(i = 0; i<arr_size; i++) fscanf(input,"%d", &b[i]);
-    for(i = 0; i<arr_size; i++) fscanf(input,"%d", &c[i]);
+    FILE *input = fopen("../input/2.txt", "r");
+    for(i = 0; i < arr_size; i++) fscanf(input, "%d", &a[i]);
+    for(i = 0; i < arr_size; i++) fscanf(input, "%d", &b[i]);
+    for(i = 0; i < arr_size; i++) fscanf(input, "%d", &c[i]);
     fclose(input);
     int *p_a = &a[0];
     int *p_b = &b[0];
@@ -325,7 +327,7 @@ int main ()
         asm volatile(/*Your Code*/);
 	}
     p_c = &c[0];
-    for(i = 0; i<arr_size; i++) printf("%d ", *p_c++);
+    for(i = 0; i < arr_size; i++) printf("%d ", *p_c++);
     printf("\n")
     return 0;
 }
@@ -336,7 +338,7 @@ int main ()
 Given the matrix multiplication code `matrix.c` below, please convert the **loop body** of the nested for-loop into the corresponding inline assembly version.
 
 Original C Code:
-```C
+```c
 /*
  * description:          matrix - multiply benchmarking
  *
@@ -355,27 +357,24 @@ Original C Code:
  
 int main()
 {  
-  int f,i,j;
-  int h[9]={0}, x[6]={0}, y[6]={0};  
-  for(i = 0; i<9; i++) scanf("%d", &h[i]);
-  for(i = 0; i<6; i++) scanf("%d", &x[i]);
-  for(i = 0; i<6; i++) scanf("%d", &y[i]);
+    int f,i,j;
+    int h[9] = {0}, x[6] = {0}, y[6] = {0};  
+    for(i = 0; i < 9; i++) scanf("%d", &h[i]);
+    for(i = 0; i < 6; i++) scanf("%d", &x[i]);
+    for(i = 0; i < 6; i++) scanf("%d", &y[i]);
  
-  int *p_x = &x[0] ;
-  int *p_h = &h[0] ;
-  int *p_y = &y[0] ;
+    int *p_x = &x[0];
+    int *p_h = &h[0];
+    int *p_y = &y[0];
   
-  for (i = 0 ; i < 3; i++)
-    {
+    for (i = 0; i < 3; i++){
       /* p_x points to the beginning of the input vector */
-      
       p_x = &x[0]; 
             
-      /* do matrix multiply */
-      
-      for (j = 0 ; j < 2; j++){ 
+      /* do matrix multiply */     
+      for (j = 0; j < 2; j++){ 
           p_h = &h[i*3];
-          for (f = 0 ; f < 3; f++)
+          for (f = 0; f < 3; f++)
 	      *p_y += *p_h++ * *p_x++;
               *p_x++;
       
@@ -384,43 +383,41 @@ int main()
           p_y++;
         }
     }
-  return(0)  ; 
-  
+    return 0; 
 }
 ```
 
-Please modify the above c code to inline assembly version. You should copy the following code and write your code in `asm volatile()`. Beware *Your Code* is **in** the for loop.
+Please modify the above c code to inline assembly version. You should copy the following code and write your code in `asm volatile()`. Beware Your Code is **in** the for loop.
 
 
-```C
+```c
 #include<stdio.h>
  
 int main()
 {  
-    int f,i,j;
-    int h[9]={0}, x[6]={0}, y[6]={0};
-    FILE *input=fopen("../input/3.txt","r")
-    for(i = 0; i<9; i++) fscanf(input, "%d", &h[i]);
-    for(i = 0; i<6; i++) fscanf(input, "%d", &x[i]);
-    for(i = 0; i<6; i++) fscanf(input, "%d", &y[i]);
+    int f, i, j;
+    int h[9] = {0}, x[6] = {0}, y[6] = {0};
+    FILE *input = fopen("../input/3.txt", "r")
+    for(i = 0; i < 9; i++) fscanf(input, "%d", &h[i]);
+    for(i = 0; i < 6; i++) fscanf(input, "%d", &x[i]);
+    for(i = 0; i < 6; i++) fscanf(input, "%d", &y[i]);
     fclose(input);
     
     int *p_x = &x[0];
     int *p_h = &h[0];
     int *p_y = &y[0];
   
-    for (i = 0 ; i < 3; i++){          
-        p_x = &x[0];    
-        for (j = 0 ; j < 2; j++){
-            for (f = 0 ; f < 3; f++){
+    for (i = 0; i < 3; i++){             
+        for (j = 0; j < 2; j++){
+            for (f = 0; f < 3; f++){
                 asm volatile(/*Your Code*/);                
         }   
       }
     }
     p_y = &y[0];
-    for(i = 0; i<6; i++) printf("%d ", *p_y++);
+    for(i = 0; i < 6; i++) printf("%d ", *p_y++);
     printf("\n");
-    return(0); 
+    return 0; 
   
 }
 ```
@@ -429,77 +426,38 @@ int main()
 Given the matrix multiplication code `matrix.c` in 3-3, please convert the nested for-loop into the inline assembly version. 
 You should copy the following code and write your code in `asm volatile()`. Note that the entire nested for-loop should be converted into the inline assembly code in this exercise.
 
-```C
+```c
 #include<stdio.h>
  
 int main()
 {  
-    int f,i=0;
-    int h[9]={0}, x[6]={0}, y[6]={0};
-    FILE *input=fopen("../input/4.txt","r")
-    for(i = 0; i<9; i++) fscanf(input, "%d", &h[i]);
-    for(i = 0; i<6; i++) fscanf(input, "%d", &x[i]);
-    for(i = 0; i<6; i++) fscanf(input, "%d", &y[i]);
+    int f, i = 0;
+    int h[9] = {0}, x[6] = {0}, y[6] = {0};
+    FILE *input = fopen("../input/4.txt", "r")
+    for(i = 0; i < 9; i++) fscanf(input, "%d", &h[i]);
+    for(i = 0; i < 6; i++) fscanf(input, "%d", &x[i]);
+    for(i = 0; i < 6; i++) fscanf(input, "%d", &y[i]);
     fclose(input);
     
-    int *p_x = &x[0] ;
-    int *p_h = &h[0] ;
-    int *p_y = &y[0] ;
+    int *p_x = &x[0];
+    int *p_h = &h[0];
+    int *p_y = &y[0];
 
     asm volatile(/*Your Code*/);
 
     p_y = &y[0];
-    for(i = 0; i<6; i++) printf("%d ", *p_y++);
+    for(i = 0; i < 6; i++) printf("%d ", *p_y++);
     printf("\n");
-    return(0); 
+    return 0; 
   
 }
 ```
 
-### 3-5 Calculate $\pi$ (20%)
-Given the calculating $\pi$ code `calcPi.c` below, please finish the following code.(20%)
-In this code `calcPi.c`, we use Leibniz formula to approximate $\pi$.
-```C
-/*
- * description: Gregory-Leibniz series
- * 
- *    we use Leibniz formula to approximate Pi
- * 
- *    pi/4 = (1 - 1/3 + 1/5 - 1/7 + 1/9 - ...)
- *    pi   = 4(1 - 1/3 + 1/5 - 1/7 + 1/9 - ...)
- * 
- */
-
-#include<stdio.h>
-    
-int main()
-{
-    int N;
-    double term,pi=0;
-    FILE *input=fopen("../input/5.txt","r");
-    fscanf(input,"%d", &N);
-    fclose(input);
-
-    /* original code 
-    for (int i = 0; i < N; i++){
-        term = pow(-1, i) / (2*i+1);
-        pi += term;
-    }
-    */
-    
-    asm volatile(/*Your Code*/);
-    
-    pi *= 4;
-    printf("PI = %.10lf", pi);
-    return(0);
-    
-}
-```
 ## 4. Test Your Assignment
 
 We use [local-judge](https://github.com/ph81918/local-judge.git) (`pip3 install local-judge`) to judge your program. 
 
-You can download the test data `Co2024HW1.rar` from the Moodle of this course. Unzip and place these data into the project folder(e.g., `$HOME/riscv`). The file `judge.conf` should be placed in the same folder as your assignment code(e.g., `$HOME/riscv/CO_StudentID_HW1`).The directory tree is shown as below.
+You can download the test data `Co2024HW1.zip` from the Moodle of this course. Unzip and place these data into the project folder(e.g., `$HOME/riscv`). The file `judge.conf` should be placed in the same folder as your assignment code(e.g., `$HOME/riscv/CO_StudentID_HW1`).The directory tree is shown as below.
 ```txt
 $HOME/riscv/
             ├── riscv-gnu-toolchain
@@ -513,7 +471,7 @@ $HOME/riscv/
             └── answer
         
 ```
-Now, You can use the judge program to get the testing score by typing `judge` in your terminal.
+Now, you can use the judge program to get the testing score by typing `judge` in your terminal.
 ```
 $ sudo apt install python3-pip
 $ pip3 install local-judge
@@ -533,13 +491,11 @@ Sample | Accept
 =======+=============================================================
      3 | ✔
 =======+=============================================================
-     4 | ✔
+     4 | ✘
 =======+=============================================================
-     5 | ✘
-=======+=============================================================
-Obtained/Total scores: 100/120
+Obtained/Total scores: 70/100
 ```
-You can typing `judge -c CONFIG`(e.g., `judge -c judge1.conf`) in your terminal to only judge certain problems.
+You can typing `judge -c [CONFIG]`(e.g., `judge -c judge1.conf`) in your terminal to only judge certain problems.
 ```
 $ cd ~/riscv/CO_StudentID_HW1
 $ judge -c judge1.conf
@@ -581,22 +537,22 @@ Obtained/Total scores:  0/20
 + Compress your source code into a `zip` file.
 + Submit your homework with NCKU Moodle.
 + The directory organization of your code should be as follows.
-	* Change all `StudentID` to your student ID number).
+	* Change all `CO_StudentID` to your student ID number)(e.g., F12345678.zip)
 
 ```txt
-CO_StudentID_HW1.zip/
-└── CO_StudentID_HW1/
+F12345678_HW1.zip/
+└── F12345678_HW1/
     ├── 1.c
     ├── 2.c
     ├── 3.c
     ├── 4.c
-    └── 5.c
+    └── Makefile
 ```
 
-<mark>**!!! Incorrect format (either the file structure or file name) will lose 30 points. !!!**</mark>
+<mark>**!!! Incorrect format (either the file structure or file name) will lose 20 points. !!!**</mark>
 
 
-## 5. Reference
+## 6. Reference
 
 + [GCC-Inline-Assembly-HOWTO](http://www.ibiblio.org/gferg/ldp/GCC-Inline-Assembly-HOWTO.html)
 + [Extended Asm - Assembler Instructions with C Expression Operands](https://gcc.gnu.org/onlinedocs/gcc/Extended-Asm.html)
